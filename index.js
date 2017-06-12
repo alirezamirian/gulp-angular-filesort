@@ -65,21 +65,14 @@ module.exports = function angularFilesort(options) {
       });
     }
     if(file.babel && file.babel.modules.imports.length > 0){
-      var importedPaths = _.uniq(file.babel.modules.imports
+      var importPaths = file.babel.modules.imports
         .map(function (anImport) {
           return path.join(path.dirname(file.path), anImport.source + options.defaultExtension);
-        }));
+        });
 
-      importedPaths
-        .map(function(importedPath){
-          return files.find(function(file){
-            return file.path === importedPath;
-          });
-        })
-        .forEach(function(importedFile){
-          if(importedFile){
-            esModuleToSort.push([file, importedFile]);
-          }
+      _.uniq(importPaths)
+        .forEach(function(importPath){
+          esModuleToSort.push([file, importPath]);
         });
     }
 
@@ -102,6 +95,19 @@ module.exports = function angularFilesort(options) {
         toSort.splice(i--, 1);
       }
     }
+    // Convert all module names to actual files with declarations:
+    esModuleToSort = esModuleToSort.map(function (sortItem) {
+      var importedFile = files.find(function(file){
+        return file.path === sortItem[1];
+      });
+      if (importedFile) {
+        return [sortItem[0], importedFile];
+      } else {
+        // importing a module outside stream (possibly a 3rd party one),
+        // don't care when sorting:
+        return undefined;
+      }
+    }).filter(_.identity);
 
     // Sort files alphabetically first to prevent random reordering.
     // Reverse sorting as it is reversed later on.
