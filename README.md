@@ -3,7 +3,8 @@
 ## Additions to gulp-angular-filesort
 
 This plugin is a fork of [gulp-angular-filesort](https://npmjs.org/package/gulp-angular-filesort)
-which adds support for additional file sorting logic based on ES6 import and exports
+which adds support for additional file sorting logic based on ES6 import and exports.
+
 If the following conditions are true, you might want to use this plugin:
 - You have an old angular project and you are using script tags instead
 of bundlers like **webpack** 
