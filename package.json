@@ -1,6 +1,6 @@
 {
   "name": "gulp-angular-esmodules-filesort",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Automatically sort AngularJS app files depending on module definitions and usage and also ES6 import/exports",
   "main": "index.js",
   "scripts": {
