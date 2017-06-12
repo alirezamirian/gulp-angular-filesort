@@ -15,7 +15,7 @@ var defaultOptions = {
   defaultExtension: '.js'
 };
 module.exports = function angularFilesort(options) {
-  _.defaults(options, defaultOptions);
+  options = _.defaults(options, defaultOptions);
   var files = [];
   var ngModules = {};
   var toSort = [];
