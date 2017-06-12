@@ -1,6 +1,24 @@
-# gulp-angular-filesort [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][depstat-image]][depstat-url]
+# gulp-angular-esmodules-filesort [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][depstat-image]][depstat-url]
 
----
+## Additions to gulp-angular-filesort
+
+This plugin is a fork of [gulp-angular-filesort](https://npmjs.org/package/gulp-angular-filesort)
+which adds support for additional file sorting logic based on ES6 import and exports
+If the following conditions are true, you might want to use this plugin:
+- You have an old angular project and you are using script tags instead
+of bundlers like **webpack** 
+- You are using babel to leverage ES6 features and you want to be able 
+to use ES6 module system.
+- You are not considering moving the whole project structure from 
+**a bunch of js files** to es6 modules and using bundlers, but there are 
+causes you want to import and export stuff in your files.
+
+**NOTE**: In order to be able to use es6 import/exports without a bundler,
+you need to use 
+[babel-plugin-globals](https://www.npmjs.com/package/babel-plugin-globals)
+to convert import/exports to read/writes from/to a global object (aka namespace)
+
+------------
 
 ## WARNING: Considering this for new apps? Don't!
 
@@ -14,10 +32,10 @@ Used in conjunction with [`gulp-inject`](https://www.npmjs.org/package/gulp-inje
 
 ## Installation
 
-Install `gulp-angular-filesort` as a development dependency:
+Install `gulp-angular-esmodules-filesort` as a development dependency:
 
 ```shell
-npm install --save-dev gulp-angular-filesort
+npm install --save-dev gulp-angular-esmodules-filesort
 ```
 
 ## Usage
@@ -25,7 +43,7 @@ npm install --save-dev gulp-angular-filesort
 ### In your `gulpfile.js`:
 
 ```javascript
-var angularFilesort = require('gulp-angular-filesort'),
+var angularFilesort = require('gulp-angular-esmodules-filesort'),
     inject = require('gulp-inject');
 
 gulp.src('./src/app/index.html')
@@ -41,11 +59,11 @@ gulp.src('./src/app/index.html')
 
 [MIT License](http://en.wikipedia.org/wiki/MIT_License)
 
-[npm-url]: https://npmjs.org/package/gulp-angular-filesort
-[npm-image]: https://badge.fury.io/js/gulp-angular-filesort.png
+[npm-url]: https://npmjs.org/package/gulp-angular-esmodules-filesort
+[npm-image]: https://badge.fury.io/js/gulp-angular-esmodules-filesort.png
 
-[travis-url]: http://travis-ci.org/klei/gulp-angular-filesort
-[travis-image]: https://secure.travis-ci.org/klei/gulp-angular-filesort.png?branch=master
+[travis-url]: http://travis-ci.org/klei/gulp-angular-esmodules-filesort
+[travis-image]: https://secure.travis-ci.org/klei/gulp-angular-esmodules-filesort.png?branch=master
 
-[depstat-url]: https://david-dm.org/klei/gulp-angular-filesort
-[depstat-image]: https://david-dm.org/klei/gulp-angular-filesort.png
+[depstat-url]: https://david-dm.org/klei/gulp-angular-esmodules-filesort
+[depstat-image]: https://david-dm.org/klei/gulp-angular-esmodules-filesort.png

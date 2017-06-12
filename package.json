@@ -30,6 +30,7 @@
     "gulp-util": "^3.0.7",
     "ng-dependencies": "^0.7.0",
     "through2": "^2.0.0",
-    "toposort": "^1.0.0"
+    "toposort": "^1.0.0",
+    "lodash": "latest"
   }
 }

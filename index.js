@@ -1,18 +1,25 @@
 'use strict';
 
+var path = require('path');
 var through = require('through2');
 var ngDep = require('ng-dependencies');
 var toposort = require('toposort');
 var gutil = require('gulp-util');
+var _ = require('lodash');
 var PluginError = gutil.PluginError;
 
 var PLUGIN_NAME = 'gulp-angular-filesort';
 var ANGULAR_MODULE = 'ng';
 
-module.exports = function angularFilesort() {
+var defaultOptions = {
+  defaultExtension: '.js'
+};
+module.exports = function angularFilesort(options) {
+  _.defaults(options, defaultOptions);
   var files = [];
   var ngModules = {};
   var toSort = [];
+  var esModuleToSort = [];
 
   function transformFunction(file, encoding, next) {
 
@@ -57,6 +64,24 @@ module.exports = function angularFilesort() {
         toSort.push([file, dep]);
       });
     }
+    if(file.babel && file.babel.modules.imports.length > 0){
+      var importedPaths = _.uniq(file.babel.modules.imports
+        .map(function (anImport) {
+          return path.join(path.dirname(file.path), anImport.source + options.defaultExtension);
+        }));
+
+      importedPaths
+        .map(function(importedPath){
+          return files.find(function(file){
+            return file.path === importedPath;
+          });
+        })
+        .forEach(function(importedFile){
+          if(importedFile){
+            esModuleToSort.push([file, importedFile]);
+          }
+        });
+    }
 
     files.push(file);
     next();
@@ -81,13 +106,13 @@ module.exports = function angularFilesort() {
     // Sort files alphabetically first to prevent random reordering.
     // Reverse sorting as it is reversed later on.
     files.sort(function (a, b) {
-        if(a.path.toLowerCase().replace(a.extname, '') < b.path.toLowerCase().replace(b.extname, '')) return 1;
-        if(a.path.toLowerCase().replace(a.extname, '') > b.path.toLowerCase().replace(b.extname, '')) return -1;
-        return 0;
+      if(a.path.toLowerCase().replace(a.extname, '') < b.path.toLowerCase().replace(b.extname, '')) return 1;
+      if(a.path.toLowerCase().replace(a.extname, '') > b.path.toLowerCase().replace(b.extname, '')) return -1;
+      return 0;
     });
 
     // Sort `files` with `toSort` as dependency tree:
-    toposort.array(files, toSort)
+    toposort.array(files, toSort.concat(esModuleToSort))
       .reverse()
       .forEach(function(file) {
         this.push(file);
