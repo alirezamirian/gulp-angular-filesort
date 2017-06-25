@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/klei/gulp-angular-filesort"
+    "url": "git://github.com/alirezamirian/gulp-angular-filesort"
   },
   "keywords": [
     "gulpplugin",
