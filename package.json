@@ -19,9 +19,9 @@
   "author": "Joakim Bengtson <joakim@klei.se>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/klei/gulp-angular-filesort/issues"
+    "url": "https://github.com/alirezamirian/gulp-angular-filesort/issues"
   },
-  "homepage": "https://github.com/klei/gulp-angular-filesort",
+  "homepage": "https://github.com/alirezamirian/gulp-angular-filesort",
   "devDependencies": {
     "chai": "^3.5.0",
     "mocha": "^2.4.5"
